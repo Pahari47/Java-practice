@@ -1,10 +1,11 @@
 {
     "java.debug.settings.onBuildFailureProceed": true,
     "java.project.sourcePaths": [
+        "10.Patterns",
         "09. Loops",
         "08.Conditional Statements",
         "07.operators",
         "06.Variables & Data Types",
-        "10.Patterns"
+        "11.Functions"
     ]
 }
