@@ -45,7 +45,36 @@ public class FactorialOfNumber {
         }
         System.out.println();
     }
+
+    // binary to decimal
+    public static void binToDec(int biNum) {
+        int myNum = biNum;
+        int pow = 0;
+        int decNum = 0;
+        while (biNum > 0) {
+            int lastDigit = biNum % 10;
+            decNum = decNum + (lastDigit * (int)Math.pow(2, pow));
+            pow++;
+            biNum = biNum / 10;
+        }
+        System.out.println("decimal of" + myNum + " = " + decNum);
+    }
+    // decimal to binary
+    public static void decToBin(int n) {
+        int Mynum = n;
+        int pow = 0;
+        int biNum = 0;
+
+        while (n > 0) {
+            int rem = n % 2;
+            biNum = biNum + (rem * (int)Math.pow(10, pow));
+
+            pow++;
+            n = n/2;
+        }
+        System.out.println("binary form of" + Mynum + " = " + biNum);
+    }
     public static void main(String[] args) {
-        primsInRange(20);
+        decToBin(5);
     }
 }
