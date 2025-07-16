@@ -134,6 +134,33 @@ public class HallowRectangle {
         }
     }
 
+    public static void numberPyramid(int n) {
+        for(int i=1; i<=n; i++) {
+            for(int j = 1; j<=n-i; j++) {
+                System.out.print(" ");
+            }
+            for(int j = 1; j<=i; j++) {
+                System.out.print(i + " ");
+            }
+            System.out.println();
+        }
+    }
+
+    public static void palindromicPyramid(int n) {
+        for(int i=1; i<=n; i++) {
+            for(int j=1; j<=(n-i); j++) {
+                System.out.print(" ");
+            }
+            for(int j=i; j>=1; j--) {
+                System.out.print(j);
+            }
+            for(int j=2; j<=i; j++) {
+                System.out.print(j);
+            }
+            System.out.println();
+        }
+    }
+
     public static void main(String[] args) {
         // hollow_rectangle(4, 5);
         // halfPyramid(4);
@@ -143,6 +170,8 @@ public class HallowRectangle {
         // butterflyPattern(5);
         // Tilted_rombas(5);
         // hollow_rombas(5);
-        Diamond_pattern(5);
+        // Diamond_pattern(5);
+        // numberPyramid(5);
+        palindromicPyramid(5);
     }
 }
