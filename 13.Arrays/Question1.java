@@ -38,10 +38,50 @@ public class Question1 {
         return -1;
     }
 
-    
+    public static int stocks(int prices[]) {
+        int buyPrice = Integer.MAX_VALUE;
+        int maxProfit = 0;
+
+        for(int i = 0; i<prices.length; i++) {
+            if (buyPrice < prices[i]) {
+            int profit = prices[i] - buyPrice;
+            maxProfit = Math.max(maxProfit, profit);
+            } else {
+                buyPrice = prices[i];
+            }
+        }
+
+        return maxProfit;
+    }
+    public static int holdRainWater(int height[]) {
+        int leftMax[] = new int[height.length];
+        leftMax[0] = height[0];
+        for(int i = 1; i<height.length; i++) {
+            leftMax[i] = Math.max(height[i], leftMax[i - 1]);
+        }
+
+        int rightMax[] = new int[height.length];
+        rightMax[height.length - 1] = height[height.length - 1];
+        for(int i = height.length - 2; i>=0; i--) {
+            rightMax[i] = Math.max(height[i], rightMax[i + 1]);
+        }
+
+        int trappedWater = 0;
+        for(int i = 1; i<height.length; i++) {
+            int waterLevel = Math.min(leftMax[i], rightMax[i]);
+
+            trappedWater += waterLevel - height[i];
+        }
+
+        return trappedWater;
+
+        
+    }
+    public static void triplate(int numbers[]) {
+        
+    }
     public static void main(String[] args) {
-        int nums[] = {4, 5, 6, 7, 0, 1, 2};
-        int target = 0;
-        System.out.println("The target is in index : " + search(nums, target));
+        int prices[] = {7, 1, 5, 3, 6, 4};
+        System.out.println("The hold rain water is : " + holdRainWater(prices));
     }
 }
