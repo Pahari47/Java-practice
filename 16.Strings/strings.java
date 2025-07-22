@@ -17,8 +17,8 @@ public class strings {
         return substr;
     }
     public static void main(String[] args) {
-        String str = "HelloWorld";
-        System.out.println(subString(str, 0, 5));
+        // String str = "HelloWorld";
+        // System.out.println(subString(str, 0, 5));
         // char arr[] = {'a', 'b', 'c', 'd'};
         // String str = "abcd";
         // String str2 = new String("xyz");
@@ -38,5 +38,12 @@ public class strings {
         
 
         // printLetters(fullName);
+
+        StringBuilder sb = new StringBuilder("");
+        for(char ch='a'; ch<='z'; ch++) {
+            sb.append(ch);
+        }
+
+        System.out.println(sb);
     }
 }
