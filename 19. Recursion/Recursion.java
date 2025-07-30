@@ -76,9 +76,43 @@ public class Recursion {
         }
         return isFound;
     }
-    public static void main(String[] args) {
-        int arr[] = {7, 7, 9, 6, 5, 8, 4, 9, 3, 5};
 
-        System.out.println(lastOccurence(arr, 5, 0));
+    public static int power(int x, int n) {
+        if (n == 0) {
+            return 1;
+        }
+        int xnm1 = power(x, n-1);
+        int xn = x * xnm1;
+        return xn;
+    }
+    public static int optimizedPower(int a, int n) {
+        if (n == 0) {
+            return 1;
+        }
+
+        // n is even
+        int half = optimizedPower(a, n/2);
+        int halfPowerSq = half * half;
+
+        // n is odd
+        if (n % 2 != 0) {
+            halfPowerSq = a * halfPowerSq;
+        }
+
+        return halfPowerSq;
+    }
+
+    public static int tilingProblem(int n) {
+        if (n == 0 || n == 1) {
+            return 1;
+        }
+        int fnm1 = tilingProblem(n - 1);
+        int fnm2 = tilingProblem(n - 2);
+
+        int totalWays = fnm1 + fnm2;
+        return totalWays;
+    }
+    public static void main(String[] args) {
+        System.out.println(tilingProblem(10));
     }
 }
