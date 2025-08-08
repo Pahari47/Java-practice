@@ -154,8 +154,51 @@ public class Recursion {
         }
     }
 
+    public static String reverse(String str) {
+        if (str.length() == 0 || str.length() == 1) {
+            return str;
+        }
+        
+        char lastChar = str.charAt(str.length() - 1);
+        String restOfString = str.substring(0, str.length() - 1);
+        String reversedRest = reverse(restOfString);
+        String reversedFull = lastChar + reversedRest;
+
+        return reversedFull;
+    }
+
+    public static boolean Sorted(int[] arr, int i) {
+        if (i == arr.length - 1) {
+            return true;
+        }
+        if (arr[i] >= arr[i + 1]) {
+           return false; 
+        }
+
+        return isSorted(arr, i + 1);
+    }
+
+    public static int countDigits(int n) {
+        if (n == 0) {
+            return 1;
+        }
+        if (n < 10) {
+            return 1;
+        }
+        return 1 + countDigits(n / 10);
+    }
+
+    public static void printNumbers(int n) {
+        if (n == 0) {
+            return;
+        }
+
+        printNumbers(n - 1);
+        System.out.println(n);
+    }
+
 
     public static void main(String[] args) {
-        printBinString(3, 0, "");
+        printNumbers(5);
     }
 }
