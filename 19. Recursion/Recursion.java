@@ -106,13 +106,56 @@ public class Recursion {
         if (n == 0 || n == 1) {
             return 1;
         }
-        int fnm1 = tilingProblem(n - 1);
-        int fnm2 = tilingProblem(n - 2);
+        // int fnm1 = tilingProblem(n - 1);
+        // int fnm2 = tilingProblem(n - 2);
 
-        int totalWays = fnm1 + fnm2;
-        return totalWays;
+        // int totalWays = fnm1 + fnm2;
+        // return totalWays;
+
+        return tilingProblem(n-1) + tilingProblem(n-2);
     }
+
+    public static void removeDuplicates(String str, int idx, StringBuilder newStr, boolean map[]) {
+        if (idx == str.length()) {
+            System.out.println(newStr);
+            return;
+        }
+
+        char currChar = str.charAt(idx);
+        if (map[currChar-'a'] == true) {
+            removeDuplicates(str, idx+1, newStr, map);
+        } else {
+            map[currChar-'a'] = true;
+            removeDuplicates(str, idx+1, newStr.append(currChar), map);
+        }
+    }
+
+    public static int friendPairing(int n) {
+        if (n == 1 || n == 2) {
+            return n;
+        }
+        int fnm1 = friendPairing(n-1);
+
+        int fnm2 = friendPairing(n - 2);
+        int pairways = (n-1) * fnm2;
+
+        int totalways = fnm1 + pairways;
+        return totalways;
+    }
+
+    public static void printBinString(int n, int lastPlace, String str) {
+        if (n == 0) {
+            System.out.println(str);
+            return;
+        }
+        printBinString(n-1, 0, str+"0");
+        if (lastPlace == 0) {
+            printBinString(n-1, 1, str+"1");        
+        }
+    }
+
+
     public static void main(String[] args) {
-        System.out.println(tilingProblem(10));
+        printBinString(3, 0, "");
     }
 }
