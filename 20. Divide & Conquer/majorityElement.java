@@ -1,21 +1,35 @@
 public class majorityElement {
     public static int mejorityCount(int arr[]) {
-        int mejority = arr.length/2;
+        return majorityElementRec(arr, 0, arr.length - 1);
+    }
+    public static int majorityElementRec(int arr[], int left, int right) {
+        if (left == right) {
+            return arr[left];
+        }
 
-        for(int i=0; i<arr.length; i++) {
-            int count = 0;
-            for(int j = 0; j < arr.length; j++) {
-                if (arr[j] == arr[i]) {
-                    count += 1;
-                }
-            }
+        int mid = (left + right) / 2;
 
-            if (count > mejority) {
-                return arr[i];
+        int leftMejor = majorityElementRec(arr, left, mid);
+        int rightMejor = majorityElementRec(arr, mid + 1, right);
+
+        if (leftMejor == rightMejor) {
+            return leftMejor;
+        }
+
+        int leftCount = countInRange(arr, leftMejor, left, right);
+        int rightCount = countInRange(arr, rightMejor, left, right);
+
+        return leftCount > rightCount ? leftMejor : rightMejor;
+    } 
+
+    private static int countInRange(int[] nums, int num, int left, int right) {
+        int count = 0;
+        for (int i = left; i <= right; i++) {
+            if (nums[i] == num) {
+                count++;
             }
         }
-        
-        return -1;
+        return count;
     }
     public static void main(String[] args) {
         int arr[] = {3, 2, 3};
