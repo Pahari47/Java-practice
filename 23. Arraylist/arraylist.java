@@ -8,20 +8,29 @@ public class arraylist {
         list.set(index2, temp);
     }
     public static void main(String[] args) {
-        // java collection frameWork
-        ArrayList<Integer> list = new ArrayList<>();
+        ArrayList<ArrayList<Integer>> mainList = new ArrayList<>();
 
-        list.add(2);
-        list.add(3);
-        list.add(1);
-        list.add(4);
+        ArrayList<Integer> list1 = new ArrayList<>();
+        ArrayList<Integer> list2 = new ArrayList<>();
+        ArrayList<Integer> list3 = new ArrayList<>();
 
-        Collections.sort(list); // asending
-        System.out.println(list);
+        for(int i=1; i<=5; i++) {
+            list1.add(i*1);
+            list2.add(i*2);
+            list3.add(i*3);
+        }
 
-        // desending
-        Collections.sort(list, Collections.reverseOrder());
-        System.out.println(list);
+        mainList.add(list1);
+        mainList.add(list2);
+        mainList.add(list3);
 
-    }
-}
+        for(int i=0; i<mainList.size(); i++) {
+            ArrayList<Integer> curreList = mainList.get(i);
+            for(int j = 0; j<curreList.size(); j++) {
+                System.out.print(curreList.get(j) + " ");
+            }
+            System.out.println();
+        }
+
+    }    
+} 
