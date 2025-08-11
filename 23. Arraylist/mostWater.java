@@ -1,15 +1,39 @@
 import java.util.ArrayList;
 
 public class mostWater {
+    // =====>>> Brute force approach <<<=======
+
+    // public static int storewater(ArrayList<Integer> height) {
+    //     int maxWater = 0;
+
+    //     for(int i=0; i<height.size(); i++) {
+    //         for(int j=i+1; j<height.size(); j++) {
+    //             int ht = Math.min(height.get(i), height.get(j));
+    //             int width = j-i;
+    //             int currentwater = ht * width;
+    //             maxWater = Math.max(maxWater, currentwater);
+    //         }
+    //     }
+
+    //     return maxWater;
+    // }
+
     public static int storewater(ArrayList<Integer> height) {
         int maxWater = 0;
+        int lp = 0;
+        int rp = height.size() - 1;
+        while (lp < rp) {
+            int ht = Math.min(height.get(lp), height.get(rp));
+            int width = rp - lp;
+            int currentwater = ht * width;
+            maxWater = Math.max(maxWater, currentwater);
 
-        for(int i=0; i<height.size(); i++) {
-            for(int j=i+1; j<height.size(); j++) {
-                int ht = Math.min(height.get(i), height.get(j));
-                int width = j-i;
-                int currentwater = ht * width;
-                maxWater = Math.max(maxWater, currentwater);
+            // update pointer
+
+            if (height.get(lp) < height.get(rp)) {
+                lp++;
+            } else {
+                rp--;
             }
         }
 
