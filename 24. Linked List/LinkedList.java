@@ -320,6 +320,104 @@ public class LinkedList {
         }
     }
 
+    public void DeleteNnodeAfterMnode(int m, int n) {
+        Node curr = head;
+
+        while (curr != null) {
+            for (int i = 1; i < m && curr != null; i++) {
+                curr = curr.next;
+            }
+
+            if (curr == null) {
+                return;
+            }
+
+            Node temp = curr.next;
+
+            for (int i = 1; i <= n && temp != null; i++) {
+                temp = temp.next;
+            }
+            curr.next = temp;
+
+            curr = temp;
+        }
+    }
+
+    void swapNodes(int x, int y) {
+        if (x == y) {
+            return;
+        }
+
+        Node prevX = null, currX = head;
+        while (currX != null && currX.data != x) {
+            prevX = currX;
+            currX = currX.next;
+        }
+
+        Node prevY = null, currY = head;
+        while (currY != null && currY.data != y) {
+            prevY = currY;
+            currY = currY.next;
+        }
+
+        if (currX == null || currY == null) {
+            return;
+        }
+
+        if (prevX != null) {
+            prevX.next = currY;
+        } else {
+            head = currY;
+        }
+
+        if (prevY != null) {
+            prevY.next = currX;
+        } else {
+            head = currX;
+        }
+
+        Node temp = currX.next;
+        currX.next = currY.next;
+        currY.next = temp;
+    }
+
+    void segregateEvenOdd() {
+        Node evenStart = null, evenEnd = null;
+        Node oddStart = null, oddEnd = null;
+        Node curr = head;
+
+        while (curr != null) {
+            if (curr.data % 2 == 0) { // even
+                if (evenStart == null) {
+                    evenStart = curr;
+                    evenEnd = evenStart;
+                } else {
+                    evenEnd.next = curr;
+                    evenEnd = evenEnd.next;
+                }
+            } else { // odd
+                if (oddStart == null) {
+                    oddStart = curr;
+                    oddEnd = oddStart;
+                } else {
+                    oddEnd.next = curr;
+                    oddEnd = oddEnd.next;
+                }
+            }
+            curr = curr.next;
+        }
+
+        if (evenStart == null || evenEnd == null) {
+            return;
+        }
+
+        evenEnd.next = oddStart;
+
+        oddEnd.next = null;
+
+        head = evenStart;
+    }
+
     public static void main(String[] args) {
         LinkedList ll = new LinkedList();
 
@@ -328,9 +426,10 @@ public class LinkedList {
         ll.addFirst(3);
         ll.addFirst(4);
         ll.addFirst(5);
+        ll.addFirst(6);
 
         ll.print();
-        ll.zigZag();
+        ll.segregateEvenOdd();
         ll.print();
 
     }
