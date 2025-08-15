@@ -1,1 +1,1 @@
-*
+System.out.println(s.pop());
