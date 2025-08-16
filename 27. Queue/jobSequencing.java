@@ -1,74 +1,45 @@
 import java.util.*;
 
-class job {
-    char id;
-    int deadline;
-    int profit;
-
-    job(char id, int deadline, int profit) {
-        this.id = id;
-        this.deadline = deadline;
-        this.profit = profit;
-    }
-}
-
 public class jobSequencing {
-    static void jobScheduling(ArrayList<job> arr) {
-        int n = arr.size();
+    static class Job {
+        int deadine;
+        int profit;
+        int id;
 
-        Collections.sort(arr, new Comparator<job>() {
-            public int compare(job a, job b) {
-                return a.deadline - b.deadline;
-            }
-        });
+        public Job(int i, int d, int p) {
+            id = i;
+            deadine = d;
+            profit = p;
+        }
+    }
+    public static void main(String[] args) {
+        int jobsInfo[][] = {{4, 20}, {1, 10}, {1, 40}, {1, 30}};
 
-        ArrayList<job> result = new ArrayList<>();
+        ArrayList<Job> jobs = new ArrayList<>();
 
-        PriorityQueue<job> maxHeap = new PriorityQueue<>(new Comparator<job>() {
-            public int compare(job a, job b) {
-                return b.profit - a.profit;
-            }
-        });
+        for(int i=0; i<jobsInfo.length; i++) {
+            jobs.add(new Job(i, jobsInfo[i][0], jobsInfo[i][1]));
+        }
 
-        for(int i=n-1; i>-1; i--) {
-            int slotAvailable;
+        Collections.sort(jobs, (a,b) -> b.profit - a.profit); // desending order of profit
 
-            if (i == 0) {
-                slotAvailable = arr.get(i).deadline;
-            } else {
-                slotAvailable = arr.get(i).deadline - arr.get(i-1).deadline;
-            }
-
-            maxHeap.add(arr.get(i));
-
-            while (slotAvailable > 0 && maxHeap.size() > 0) {
-                job job = maxHeap.remove();
-                slotAvailable--;
-                result.add(job);
+        ArrayList<Integer> seq = new ArrayList<>();
+        int time = 0;
+        for(int i=0; i<jobs.size(); i++) {
+            Job curr = jobs.get(i);
+            if (curr.deadine > time) {
+                seq.add(curr.id);
+                time++;
             }
         }
 
-        Collections.sort(result, new Comparator<job>() {
-            public int compare(job a, job b) {
-                return a.deadline - a.deadline;
-            }
-        });
-
-        for(int i=0; i<result.size(); i++) {
-            System.out.print(result.get(i).id + " ");
+        // print seq
+        System.out.println("max jobs = " + seq.size());
+        for(int i=0; i<seq.size(); i++) {
+            System.out.print(seq.get(i) + " ");
         }
 
         System.out.println();
     }
-    public static void main(String[] args) {
-        ArrayList<job> arr = new ArrayList<job>();       // Build sample list
-        arr.add(new job('a', 2, 100));
-        arr.add(new job('b', 1, 19));
-        arr.add(new job('c', 2, 27));
-        arr.add(new job('d', 1, 25));
-        arr.add(new job('e', 3, 15));
 
-        System.out.println("Following is maximum profit sequence of jobs");
-        jobScheduling(arr);
-    }
 }
