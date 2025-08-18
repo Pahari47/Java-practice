@@ -166,6 +166,85 @@ public class Heighoftree {
         System.out.println();
     }
 
+    public static void KLevel(Node root, int level, int k) {
+        if (root == null) {
+            return;
+        }
+
+        if (level == k) {
+            System.out.print(root.data + " ");
+            return;
+        }
+
+        KLevel(root.left, level+1, k);
+        KLevel(root.right, level+1, k);
+    }
+
+    public static boolean getPath(Node root, int n, ArrayList<Node> path) {
+        if (root == null) {
+            return false;
+        }
+        path.add(root);
+
+        if (root.data == n) {
+            return true;
+        }
+
+        boolean foundLeft = getPath(root.left, n, path);
+        boolean foundRight = getPath(root.right, n, path);
+
+        if (foundLeft || foundRight) {
+            return true;
+        }
+
+        path.remove(path.size() - 1);
+        return false;
+    }
+
+    public static Node lca(Node root, int n1, int n2) { // O(n)
+        ArrayList<Node> path1 = new ArrayList<>();
+        ArrayList<Node> path2 = new ArrayList<>();
+
+        boolean p1 = getPath(root, n1, path1);
+        boolean p2 = getPath(root, n2, path2);
+
+        if (!p1 || !p2) {
+            return null;
+        }
+
+        // last common ancestor
+        int i = 0;
+        for(; i<path1.size() && i<path2.size(); i++) {
+            if (path1.get(i) != path2.get(i)) {
+                break; 
+            }
+        }
+
+        //last equal node 
+        return path1.get(i-1);
+    }
+
+    //LCA Approach 2
+    public static Node lca2(Node root, int n1, int n2) {
+        if (root == null || root.data == n1 || root.data == n2) {
+            return root;
+        }
+
+        Node leftLca = lca2(root.left, n1, n2);
+        Node rightLca = lca2(root.right, n1, n2);
+
+        //leftLca = value but rightLca = null
+        if (rightLca == null) {
+            return leftLca;
+        }
+
+        if (leftLca == null) {
+            return rightLca;
+        }
+
+        return root;
+    }
+
     public static void main(String[] args) {
         // Tree
         Node root = new Node(1);
@@ -176,6 +255,7 @@ public class Heighoftree {
         root.right.left = new Node(6);
         root.right.right = new Node(7);
 
-        topView(root);
+        int n1 = 4, n2 = 5;
+        System.out.println(lca2(root, n1, n2).data);
     }
 }
