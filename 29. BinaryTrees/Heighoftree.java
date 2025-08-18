@@ -1,8 +1,10 @@
 import java.util.*;
+
 public class Heighoftree {
     static class Node {
         int data;
         Node left, right;
+
         public Node(int data) {
             this.data = data;
             this.left = null;
@@ -41,7 +43,7 @@ public class Heighoftree {
     }
 
     // DIAMETER APPROACH 1
-    public static int diameter2(Node root) { //O(n^2)
+    public static int diameter2(Node root) { // O(n^2)
         if (root == null) {
             return 0;
         }
@@ -66,6 +68,7 @@ public class Heighoftree {
             this.ht = ht;
         }
     }
+
     public static Info diameter(Node root) {
         if (root == null) {
             return new Info(0, 0);
@@ -74,12 +77,97 @@ public class Heighoftree {
         Info leftInfo = diameter(root.left);
         Info rightInfo = diameter(root.right);
 
-        int diam = Math.max(Math.max(leftInfo.diam, rightInfo.diam), leftInfo.ht+rightInfo.ht+1);
+        int diam = Math.max(Math.max(leftInfo.diam, rightInfo.diam), leftInfo.ht + rightInfo.ht + 1);
         int ht = Math.max(leftInfo.ht, rightInfo.ht) + 1;
 
         return new Info(diam, ht);
     }
+
+    public static boolean isIdentical(Node node, Node subRoot) {
+        if (node == null && subRoot == null) {
+            return true;
+        } else if (node == null || subRoot == null || node.data != subRoot.data) {
+            return false;
+        }
+
+        if (!isIdentical(node.left, subRoot.left)) {
+            return false;
+        }
+        if (!isIdentical(node.right, subRoot.right)) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public static boolean isSubTree(Node root, Node subRoot) {
+        if (root == null) {
+            return false;
+        }
+        if (root.data == subRoot.data) {
+            if (isIdentical(root, subRoot)) {
+                return true;
+            }
+        }
+
+        boolean leftAns = isSubTree(root.left, subRoot);
+        boolean rightAns = isSubTree(root.right, subRoot);
+
+        return leftAns || rightAns;
+    }
+
+    static class Alfa {
+        Node node;
+        int hd;
+
+        public Alfa(Node node, int hd) {
+            this.node = node;
+            this.hd = hd;
+        }
+    }
+
+    public static void topView(Node root) {
+        // Level order
+        Queue<Alfa> q = new LinkedList<>();
+        HashMap<Integer, Node> map = new HashMap<>();
+
+        int min = 0, max = 0;
+        q.add(new Alfa(root, 0));
+        q.add(null);
+
+        while (!q.isEmpty()) {
+            Alfa curr = q.remove();
+            if (curr == null) {
+                if (q.isEmpty()) {
+                    break;
+                } else {
+                    q.add(null);
+                }
+            } else {
+                if (!map.containsKey(curr.hd)) { // firsttime horizontal distance occuring
+                    map.put(curr.hd, curr.node);
+                }
+
+                if (curr.node.left != null) {
+                    q.add(new Alfa(curr.node.left, curr.hd - 1));
+                    min = Math.min(min, curr.hd - 1);
+                }
+                if (curr.node.right != null) {
+                    q.add(new Alfa(curr.node.right, curr.hd + 1));
+                    max = Math.max(max, curr.hd + 1);
+                }
+            }
+
+        }
+
+        for (int i = min; i <= max; i++) {
+            System.out.print(map.get(i).data + " ");
+        }
+        System.out.println();
+    }
+
     public static void main(String[] args) {
+        // Tree
         Node root = new Node(1);
         root.left = new Node(2);
         root.right = new Node(3);
@@ -88,6 +176,6 @@ public class Heighoftree {
         root.right.left = new Node(6);
         root.right.right = new Node(7);
 
-        System.out.println(diameter(root).diam);
+        topView(root);
     }
 }
