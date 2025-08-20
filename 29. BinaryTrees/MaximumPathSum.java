@@ -40,6 +40,7 @@ public class MaximumPathSum {
         root.right = new Node(20);
         root.right.left = new Node(15);
         root.right.right = new Node(7);
+        root.right.right.left = new Node(7);
 
         System.out.println(maxPathSum(root));
     }
